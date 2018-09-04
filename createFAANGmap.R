@@ -25,6 +25,9 @@ option_list = list(
               metavar="character"),
   make_option(c("-m", "--map"), type="character", default="map.html", 
               help="name for map html file [default= %default]",
+              metavar="character"),
+  make_option(c("-l", "--logo"), type="character", default=NULL,
+              help="directory for the logo to put on the different locations",
               metavar="character")
 ); 
 
@@ -38,11 +41,17 @@ partners_file <- opt$file
 former_file <- opt$old
 res_file <- opt$res
 map_file <- opt$map
+logo_file <- opt$logo
 ###############################################################################
 
 ###############################################################################
 ##### This part processes the data: search new entries, then search for
 ##### latitude and longitude
+
+# check if a logo is available
+if (is.null(logo_file)) {
+  stop("You must provide a logo file (option '-l')")
+}
 
 # load new list
 partners = read.table(partners_file, sep="\t", header=TRUE, quote="",
@@ -191,8 +200,8 @@ if (length(partners) > 0) {
 
 # choose your icon
 leafIcons <- icons(
-  iconUrl = "http://leafletjs.com/docs/images/leaf-red.png",
-  iconWidth = 15, iconHeight = 40,
+  iconUrl = logo_file,
+  iconWidth = 15, #iconHeight = 40,
   iconAnchorY = 40
 )
 
@@ -202,8 +211,8 @@ popup_text[is.na(partner_loc$city)] <- partner_loc$country[is.na(partner_loc$cit
 
 # create the map (tiles can be chosen from https://leaflet-extras.github.io/leaflet-providers/preview)
 m <- leaflet() %>% 
-  addProviderTiles("MapQuestOpen.OSM",
-                   options = providerTileOptions(attribution=htmlEscape("Tiles Courtesy of <a href=\"http://www.mapquest.com\">MapQuest</a> &mdash; Map data &copy; <a href=\"http://www.openstreetmap.org/copyright\">OpenStreetMap</a> | map kindly provided by <a href=\"http://tuxette.nathalievilla.org\">tuxette</a>"))) %>%
+  addProviderTiles("Stamen.Watercolor",
+                   options = providerTileOptions(attribution=htmlEscape("Tiles Courtesy of Stamen Design, CC BY 3.0; Map data OpenStreetMap | map kindly provided by tuxette"))) %>%
   addMarkers(lng=partner_loc$lon, lat=partner_loc$lat, icon=leafIcons, 
              popup=htmlEscape(popup_text))
 # m  # print the map

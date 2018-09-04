@@ -78,13 +78,13 @@ This script is a command line script which can be executed on Unix-like OS. It
 is used with
 
 ```
-./createFAANGmap.R -f "members_20151002.csv" -o "recordMembers.txt" -r "output.txt" -m "map.html"
+./createFAANGmap.R -f "members_20151002.csv" -l "logo.png" -o "recordMembers.txt" -r "output.txt" -m "map.html"
 ```
 
-Only the first argument is mandatory. If you have an error, you can alternatively try
+Only the first two arguments are mandatory. If you have an error, you can alternatively try
 
 ```
-Rscript createFAANGmap.R -f "members_20151002.csv" -o "recordMembers.txt" -r "output.txt" -m "map.html"
+Rscript createFAANGmap.R -f "members_20151002.csv" -l "logo.png" -o "recordMembers.txt" -r "output.txt" -m "map.html"
 ```
 
 ### createFAANGmap-sourcing.R
